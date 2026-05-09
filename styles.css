@@ -298,32 +298,76 @@ input, select, textarea, button { font: inherit; }
   min-width: 0;
 }
 
-/* ---------- 4. SIDEBAR ---------- */
+/* ---------- 4. SIDEBAR · card flutuante com duplo glass (membrana premium) ---------- */
+/* Wrapper-membrana externa (::before) + camada interna principal (.sidebar) =
+   sensação de duas placas de vidro fosco sobrepostas. */
 .sidebar {
-  position: sticky; top: 0;
-  height: 100vh;
+  position: sticky; top: 12px;
+  /* Altura coerente com o offset superior + folga inferior (não cola na borda) */
+  height: calc(100vh - 24px);
+  margin: 12px 0 12px 12px;
   background: var(--glass-bg-strong);
   /* Glass density via tokens · ajustável em Subetapa 3.6 */
   backdrop-filter: saturate(var(--glass-saturate, 160%)) blur(var(--glass-blur, 22px));
   -webkit-backdrop-filter: saturate(var(--glass-saturate, 160%)) blur(var(--glass-blur, 22px));
-  border-right: 1px solid var(--glass-border);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
   display: flex; flex-direction: column;
   overflow: hidden;
   z-index: 30;
+  /* Duplo glass · sombra externa suave + highlight interno superior + halo discreto */
+  box-shadow:
+    0 1px 0 0 color-mix(in oklab, white 22%, transparent) inset,
+    0 0 0 1px color-mix(in oklab, white 8%, transparent) inset,
+    0 14px 38px -22px rgba(12,10,9,.32),
+    0 4px 14px -8px rgba(12,10,9,.14);
   transition:
     transform        var(--t-med)  var(--ease-cinema),
     width            var(--t-med)  var(--ease-cinema),
     backdrop-filter  var(--t-slow) var(--ease),
-    border-color     var(--t-med)  var(--ease);
+    border-color     var(--t-med)  var(--ease),
+    box-shadow       var(--t-med)  var(--ease);
+}
+/* Camada externa do duplo glass — segunda membrana atrás da primeira.
+   Expande 6px em volta, com blur menor, opacidade baixa e cor neutra translúcida.
+   Não captura pointer events e fica abaixo da camada principal (z-index negativo). */
+.sidebar::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 24px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(calc(var(--glass-blur, 22px) * 0.6));
+  -webkit-backdrop-filter: blur(calc(var(--glass-blur, 22px) * 0.6));
+  border: 1px solid color-mix(in oklab, var(--glass-border) 60%, transparent);
+  box-shadow: 0 22px 60px -34px rgba(12,10,9,.40);
+  opacity: .55;
+  z-index: -1;
+  pointer-events: none;
+  transition: opacity var(--t-med) var(--ease), border-color var(--t-med) var(--ease);
 }
 .sidebar:hover {
-  /* Blur sutilmente intensificado no hover — sensação de foco ao usuário se aproximar */
-  border-right-color: color-mix(in oklab, var(--accent) 18%, var(--glass-border));
+  border-color: color-mix(in oklab, var(--accent) 14%, var(--glass-border));
+}
+.sidebar:hover::before {
+  opacity: .72;
+  border-color: color-mix(in oklab, var(--accent) 10%, var(--glass-border));
 }
 .sidebar__head {
+  position: relative;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 18px 18px 14px; gap: 8px;
+  padding: 16px 16px 12px; gap: 8px;
   border-bottom: 1px solid var(--hairline-soft);
+}
+/* Highlight horizontal sutil sob o head — completa o duplo glass por dentro */
+.sidebar__head::after {
+  content: "";
+  position: absolute; left: 14px; right: 14px; bottom: -1px; height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    color-mix(in oklab, white 22%, transparent) 50%,
+    transparent);
+  pointer-events: none;
 }
 .brand {
   display: flex; align-items: center; gap: 12px;
@@ -423,15 +467,26 @@ input, select, textarea, button { font: inherit; }
 .nav-link__num { margin-left: auto; font-size: 11px; color: var(--txt-mute); font-variant-numeric: tabular-nums; flex: none; }
 
 .sidebar__foot {
-  padding: 12px 18px 18px;
+  position: relative;
+  padding: 12px 16px 16px;
   border-top: 1px solid var(--hairline-soft);
   font-size: 11px; color: var(--txt-3);
+}
+/* Highlight horizontal sutil sobre o foot — espelha o head, fechando o duplo glass */
+.sidebar__foot::before {
+  content: "";
+  position: absolute; left: 14px; right: 14px; top: 0; height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    color-mix(in oklab, white 18%, transparent) 50%,
+    transparent);
+  pointer-events: none;
 }
 .foot-mini { line-height: 1.4; }
 .foot-mini--hint { color: var(--txt-mute); margin-top: 2px; }
 
-/* sidebar collapsed (desktop) */
-.app.sidebar-collapsed .sidebar { width: var(--sidebar-w-collapsed); }
+/* sidebar collapsed (desktop) — preserva o card flutuante em modo recolhido */
+.app.sidebar-collapsed .sidebar { width: calc(var(--sidebar-w-collapsed) - 12px); }
 .app.sidebar-collapsed .brand__txt,
 .app.sidebar-collapsed .nav-link__txt,
 .app.sidebar-collapsed .nav-link__num,
@@ -1685,10 +1740,21 @@ table.tbl tbody td:first-child {
   :root { --topbar-h: 56px; }
   .app { grid-template-columns: 1fr; }
   .sidebar {
-    position: fixed; left: 0; top: 0;
+    position: fixed; left: 8px; top: 8px;
+    height: calc(100vh - 16px);
     width: min(86vw, 320px);
-    transform: translateX(-101%);
-    box-shadow: var(--sh-3);
+    margin: 0;
+    border-radius: 18px;
+    transform: translateX(calc(-101% - 8px));
+    box-shadow:
+      0 1px 0 0 color-mix(in oklab, white 22%, transparent) inset,
+      0 24px 60px -22px rgba(12,10,9,.50),
+      0 8px 22px -12px rgba(12,10,9,.20);
+  }
+  .sidebar::before {
+    inset: -5px;
+    border-radius: 22px;
+    opacity: .45;
   }
   .app.sidebar-open .sidebar { transform: translateX(0); }
   .scrim {
