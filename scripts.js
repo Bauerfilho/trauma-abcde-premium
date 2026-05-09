@@ -483,8 +483,9 @@
     // scroll to top, focus host
     window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
     pageHost.focus({ preventScroll: true });
-    // bind interactions in this section
-    bindInteractions(sec);
+    // bind interactions · usa pageHost como root para incluir blocos
+    // injetados após a section (quiz-extra "Teste seu gabarito", page-nav etc.)
+    bindInteractions(pageHost);
     // recompute scroll-driven state (--tb-blur, --read-progress) after layout settles
     requestAnimationFrame(() => requestAnimationFrame(_applyScrollState));
   }
