@@ -1,0 +1,73 @@
+{
+  "name": "Trauma Premium · Atendimento Inicial & ABCDE",
+  "short_name": "Trauma Premium",
+  "description": "Plataforma educacional de trauma para residência médica — XABCDE, ATLS 11ª edição (2025), Sabiston 22ª. Vias aéreas, choque hemorrágico, transfusão maciça, pneumotórax hipertensivo, hemotórax, tamponamento, tórax instável, lesão de aorta e raciocínio clínico.",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "categories": ["education", "medical", "books", "productivity"],
+  "start_url": "./",
+  "scope": "./",
+  "id": "/trauma-premium-abcde/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "orientation": "any",
+  "theme_color": "#0c0a09",
+  "background_color": "#0a0908",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "./icons/icon-192.svg",
+      "type": "image/svg+xml",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-512.svg",
+      "type": "image/svg+xml",
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-maskable-512.svg",
+      "type": "image/svg+xml",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./icons/icon-monochrome.svg",
+      "type": "image/svg+xml",
+      "sizes": "512x512",
+      "purpose": "monochrome"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Simulador XABCDE",
+      "short_name": "Simulador",
+      "description": "Sequência multi-step do atendimento inicial",
+      "url": "./#/simulador-xabcde",
+      "icons": [{ "src": "./icons/icon-192.svg", "sizes": "192x192", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "Quiz geral",
+      "short_name": "Quiz",
+      "description": "Banco de questões de prova",
+      "url": "./#/quiz-geral",
+      "icons": [{ "src": "./icons/icon-192.svg", "sizes": "192x192", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "Calculadoras",
+      "short_name": "Calc",
+      "description": "Glasgow, ABC Score, Shock Index, TXA, Torniquete",
+      "url": "./#/calculadoras",
+      "icons": [{ "src": "./icons/icon-192.svg", "sizes": "192x192", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "Pegadinhas de banca",
+      "short_name": "Pegadinhas",
+      "description": "Armadilhas clássicas do ATLS em prova",
+      "url": "./#/pegadinhas-banca",
+      "icons": [{ "src": "./icons/icon-192.svg", "sizes": "192x192", "type": "image/svg+xml" }]
+    }
+  ]
+}

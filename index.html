@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="Trauma Premium: Atendimento Inicial & ABCDE — plataforma autoral para residência médica sobre XABCDE, ATLS 11 (2025), Sabiston 22ª, vias aéreas, choque hemorrágico, transfusão maciça, pneumotórax hipertensivo, hemotórax, tamponamento, tórax instável, lesão de aorta e raciocínio clínico de prova.">
+<meta name="theme-color" content="#7f1d1d" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0c0a09" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Trauma Premium">
+<title>Trauma Premium · Atendimento Inicial & ABCDE</title>
+<link rel="preconnect" href="https://rsms.me/">
+<link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+<link rel="stylesheet" href="./styles.css">
+<link rel="icon" type="image/svg+xml" href="./icons/icon-192.svg">
+<link rel="alternate icon" href="./icons/icon-192.svg">
+<link rel="apple-touch-icon" href="./icons/apple-touch-icon.svg">
+<link rel="mask-icon" href="./icons/icon-monochrome.svg" color="#7f1d1d">
+
+<!-- PWA · manifest + descritores -->
+<link rel="manifest" href="./manifest.json">
+<meta name="application-name" content="Trauma Premium">
+<meta name="msapplication-TileColor" content="#7f1d1d">
+<meta name="msapplication-tap-highlight" content="no">
+<meta name="format-detection" content="telephone=no">
+<meta name="mobile-web-app-capable" content="yes">
+
+<!-- Open Graph (compartilhamento) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Trauma Premium · Atendimento Inicial & ABCDE">
+<meta property="og:description" content="Plataforma autoral para residência médica — XABCDE, ATLS 11ª (2025), Sabiston 22ª.">
+<meta property="og:image" content="./icons/icon-512.svg">
+<meta name="twitter:card" content="summary">
+</head>
+<body data-theme="dark">
+
+<!-- AURORA AMBIENT BACKGROUND -->
+<div class="aurora" aria-hidden="true">
+  <span class="aurora__layer aurora__layer--x"></span>
+  <span class="aurora__layer aurora__layer--a"></span>
+  <span class="aurora__layer aurora__layer--c"></span>
+  <span class="aurora__layer aurora__layer--d"></span>
+  <span class="aurora__layer aurora__layer--e"></span>
+  <span class="aurora__grain"></span>
+</div>
+
+<!-- SCRIM (mobile sidebar overlay) -->
+<div class="scrim" id="scrim"></div>
+
+<!-- INSTALL PROMPT — instalação como app (Chrome/Edge/Android via beforeinstallprompt; iOS via instruções) -->
+<div class="install-toast" id="installToast" role="dialog" aria-labelledby="installToastTitle" hidden>
+  <div class="install-toast__icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="5" y="2" width="14" height="20" rx="3"/>
+      <path d="M12 8v8"/>
+      <path d="M9 13l3 3 3-3"/>
+    </svg>
+  </div>
+  <div class="install-toast__copy">
+    <strong class="install-toast__title" id="installToastTitle">Instalar Trauma Premium</strong>
+    <span class="install-toast__sub" id="installToastSub">Acesso offline, ícone na tela inicial.</span>
+  </div>
+  <button type="button" class="install-toast__action" id="installToastAction">Instalar</button>
+  <button type="button" class="install-toast__close" id="installToastClose" aria-label="Dispensar instalação">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
+  </button>
+</div>
+
+<!-- iOS INSTALL HINT — overlay com instruções para Safari iOS -->
+<div class="ios-hint" id="iosHint" role="dialog" aria-labelledby="iosHintTitle" hidden>
+  <div class="ios-hint__card">
+    <button type="button" class="ios-hint__close" id="iosHintClose" aria-label="Fechar instruções">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
+    </button>
+    <h3 class="ios-hint__title" id="iosHintTitle">Instalar no iPhone / iPad</h3>
+    <ol class="ios-hint__steps">
+      <li>
+        <span class="ios-hint__step-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M8 7l4-4 4 4"/><rect x="4" y="13" width="16" height="8" rx="2"/></svg>
+        </span>
+        Toque no botão <strong>Compartilhar</strong> na barra do Safari.
+      </li>
+      <li>
+        <span class="ios-hint__step-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>
+        </span>
+        Role e escolha <strong>Adicionar à Tela de Início</strong>.
+      </li>
+      <li>
+        <span class="ios-hint__step-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>
+        </span>
+        Confirme em <strong>Adicionar</strong> — pronto, abre como app.
+      </li>
+    </ol>
+    <button type="button" class="ios-hint__ok" id="iosHintOk">Entendi</button>
+  </div>
+</div>
+
+<!-- UPDATE TOAST — nova versão do app disponível (Service Worker waiting) -->
+<div class="update-toast" id="updateToast" role="status" aria-live="polite" hidden>
+  <div class="update-toast__icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12a9 9 0 11-3-6.7"/>
+      <path d="M21 4v5h-5"/>
+    </svg>
+  </div>
+  <div class="update-toast__copy">
+    <strong class="update-toast__title">Atualização disponível</strong>
+    <span class="update-toast__sub">Recarregue para usar a nova versão.</span>
+  </div>
+  <button type="button" class="update-toast__action" id="updateToastAction">Atualizar</button>
+  <button type="button" class="update-toast__close" id="updateToastClose" aria-label="Dispensar aviso de atualização">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
+  </button>
+</div>
+
+<!-- Skip-link para acessibilidade (visível apenas com :focus) -->
+<a class="skip-to-main" href="#pageHost">Pular para o conteúdo</a>
+
+<div class="app">
+  <!-- =================== SIDEBAR =================== -->
+  <aside class="sidebar" id="sidebar" aria-label="Navegação principal">
+    <div class="sidebar__head">
+      <a href="#hero" class="brand" id="brandLink">
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32"><path d="M5 16h5l3-7 5 14 3-7h6" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="brand__txt">
+          <span class="brand__title">Trauma Premium</span>
+          <span class="brand__sub">Atendimento Inicial &amp; ABCDE</span>
+        </span>
+      </a>
+      <button class="icon-btn sidebar__close" id="sidebarCloseBtn" aria-label="Fechar menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
+      </button>
+    </div>
+    <nav class="nav" id="nav" aria-label="Lista de páginas"></nav>
+    <div class="sidebar__foot">
+      <div class="foot-mini">ATLS 11ª · Sabiston 2025</div>
+      <div class="foot-mini foot-mini--hint">Plataforma educacional</div>
+    </div>
+  </aside>
+
+  <!-- =================== CONTENT SHELL =================== -->
+  <div class="content-shell">
+    <header class="topbar" id="topbar">
+      <button class="icon-btn menu-btn" id="menuBtn" aria-label="Abrir menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+
+      <div class="topbar-copy" id="topbarCopy">
+        <span class="topbar-eyebrow">XABCDE · ATLS 11 (2025)</span>
+        <span class="topbar-title">Trauma Premium</span>
+      </div>
+
+      <div class="trilha-pill desktop-only" aria-label="Trilha XABCDE" title="x → A → B → C → D → E">
+        <div class="trilha-pill__head">
+          <span class="trilha-pill__label">Trilha XABCDE</span>
+          <span class="trilha-pill__count" id="progCount">1 / 22</span>
+        </div>
+        <div class="trilha-pill__steps">
+          <span class="step-letter step-x">x</span>
+          <span class="step-letter step-a">A</span>
+          <span class="step-letter step-b">B</span>
+          <span class="step-letter step-c">C</span>
+          <span class="step-letter step-d">D</span>
+          <span class="step-letter step-e">E</span>
+        </div>
+        <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="progFill" style="width:5%"></div></div>
+      </div>
+
+      <div class="topbar-actions">
+        <button class="icon-btn desktop-only" id="topCollapseBtn" aria-label="Recolher menu lateral" title="Recolher / expandir menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+        <div class="prefs-wrap">
+          <button class="icon-btn" id="prefsBtn" aria-label="Preferências de exibição" title="Preferências (translucidez · aurora)" aria-expanded="false" aria-controls="prefsPanel">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.6"/><path d="M19.4 15a1.7 1.7 0 00.3 1.9l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.9-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1-1.5 1.7 1.7 0 00-1.9.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.9 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1 1.7 1.7 0 00-.3-1.9l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.9.3h0a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.9-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.9v0a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg>
+          </button>
+          <div class="prefs-panel" id="prefsPanel" role="dialog" aria-label="Preferências de exibição" hidden>
+            <div class="prefs-row">
+              <label class="prefs-label" for="prefsBlur">Translucidez <span class="prefs-hint" id="prefsBlurOut">22 px</span></label>
+              <input type="range" id="prefsBlur" min="0" max="36" step="2" value="22" class="prefs-slider" aria-describedby="prefsBlurOut">
+            </div>
+            <div class="prefs-row">
+              <label class="prefs-label" for="prefsSat">Saturação <span class="prefs-hint" id="prefsSatOut">160%</span></label>
+              <input type="range" id="prefsSat" min="100" max="200" step="10" value="160" class="prefs-slider" aria-describedby="prefsSatOut">
+            </div>
+            <div class="prefs-row">
+              <span class="prefs-label">Aurora</span>
+              <div class="prefs-seg" role="radiogroup" aria-label="Intensidade da aurora">
+                <button type="button" class="prefs-seg-btn" data-aurora-mode="on"   role="radio" aria-checked="true">Padrão</button>
+                <button type="button" class="prefs-seg-btn" data-aurora-mode="calm" role="radio" aria-checked="false">Estudo</button>
+                <button type="button" class="prefs-seg-btn" data-aurora-mode="off"  role="radio" aria-checked="false">Off</button>
+              </div>
+            </div>
+            <button type="button" class="prefs-reset" id="prefsReset">Restaurar padrão</button>
+          </div>
+        </div>
+        <button class="icon-btn" id="themeBtn" aria-label="Alternar tema claro/escuro" title="Alternar tema">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.8A9 9 0 0111.2 3a7 7 0 109.8 9.8z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="page-host" id="pageHost" tabindex="-1"></main>
+  </div>
+</div>
+
+<!-- ===================================================================== -->
+<!-- PÁGINAS-FONTE — TODAS são injetadas via router em scripts.js          -->
+<!-- HERO + CASO INTEGRADOR ficam aqui como fallback estável               -->
+<!-- ===================================================================== -->
+<div id="sectionRoot" hidden>
+
+<!-- ========================== 00 · HERO ========================== -->
+<section class="section" data-id="hero">
+  <div class="hero">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="kicker">Cirurgia · Emergência · Trauma</span>
+        <h1>O paciente está exsanguinando.<br>Qual é o seu próximo passo?</h1>
+        <p class="lead">Plataforma autoral de raciocínio clínico em trauma, alinhada ao <strong>ATLS 11ª edição (2025)</strong> e ao <strong>Sabiston 22ª edição</strong>. Cada letra do <span class="mono">x A B C D E</span> é uma decisão que muda o gabarito — e o desfecho do paciente.</p>
+        <div class="hero-tags">
+          <span class="tag tag-x">x · exsanguinação</span>
+          <span class="tag tag-a">A · via aérea + cervical</span>
+          <span class="tag tag-b">B · respiração</span>
+          <span class="tag tag-c">C · circulação + choque</span>
+          <span class="tag tag-d">D · disfunção neuro</span>
+          <span class="tag tag-e">E · exposição</span>
+        </div>
+        <div class="hero-actions">
+          <a class="btn primary" href="#xabcde-visao-geral">Começar pelo XABCDE →</a>
+          <a class="btn ghost" href="#simulador-xabcde">Ir ao simulador completo</a>
+        </div>
+        <div class="hero-meta">
+          <span class="hero-meta__dot"></span>
+          <span>22 páginas didáticas · simuladores · calculadoras · quizzes · flashcards</span>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-label="Sequência xABCDE animada do trauma">
+        <div class="hero-monitor">
+          <div class="hero-monitor__bar">
+            <span class="hero-monitor__dot"></span>
+            <span class="hero-monitor__dot"></span>
+            <span class="hero-monitor__dot"></span>
+            <span class="hero-monitor__label">SALA DE EMERGÊNCIA</span>
+          </div>
+          <div class="hero-vital">
+            <div class="hv-row"><span>FC</span><strong class="hv-num pulse-fc">128</strong><span class="hv-u">bpm</span></div>
+            <div class="hv-row"><span>PAS</span><strong class="hv-num pulse-pas">82</strong><span class="hv-u">mmHg</span></div>
+            <div class="hv-row"><span>SpO₂</span><strong class="hv-num">91</strong><span class="hv-u">%</span></div>
+            <div class="hv-row"><span>ECG</span><strong class="hv-num">12</strong><span class="hv-u">Glasgow</span></div>
+          </div>
+          <div class="hero-ecg" aria-hidden="true">
+            <svg viewBox="0 0 400 70" preserveAspectRatio="none">
+              <polyline class="ecg-line" points="0,35 40,35 50,35 56,15 62,55 68,35 110,35 116,15 122,55 128,35 170,35 176,15 182,55 188,35 230,35 236,15 242,55 248,35 290,35 296,15 302,55 308,35 350,35 400,35"/>
+            </svg>
+          </div>
+          <div class="hero-letters">
+            <span class="hl hl-x">x</span>
+            <span class="hl hl-a">A</span>
+            <span class="hl hl-b">B</span>
+            <span class="hl hl-c">C</span>
+            <span class="hl hl-d">D</span>
+            <span class="hl hl-e">E</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-strip">
+    <div class="hero-strip__item">
+      <div class="hsi-num">11ª</div>
+      <div class="hsi-txt">Edição do ATLS (2025) · novo X minúsculo, novo PTM, nova toracotomia</div>
+    </div>
+    <div class="hero-strip__item">
+      <div class="hsi-num">1:1:1</div>
+      <div class="hsi-txt">Hemácias : plasma : plaquetas no protocolo de transfusão maciça</div>
+    </div>
+    <div class="hero-strip__item">
+      <div class="hsi-num">3 h</div>
+      <div class="hsi-txt">Janela do ácido tranexâmico — fora dela, pode aumentar mortalidade</div>
+    </div>
+    <div class="hero-strip__item">
+      <div class="hsi-num">≤ 8</div>
+      <div class="hsi-txt">Glasgow ≤ 8 → via aérea definitiva, sem discussão</div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /sectionRoot -->
+
+<script src="./content-data.js"></script>
+<script src="./sections-1.js"></script>
+<script src="./sections-2.js"></script>
+<script src="./sections-3.js"></script>
+<script src="./scripts.js"></script>
+</body>
+</html>
