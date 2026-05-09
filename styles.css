@@ -1553,6 +1553,192 @@ table.tbl tbody td:first-child {
 @keyframes fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 .quiz__feedback strong { color: var(--accent); }
 
+/* nível de dificuldade · pequeno chip ao lado da tag */
+.quiz__level {
+  margin-left: 8px;
+  font-size: 10.5px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--txt-3);
+  padding: 2px 8px; border-radius: 999px;
+  border: 1px solid var(--hairline-soft);
+  background: color-mix(in oklab, var(--surface-2) 50%, var(--surface));
+}
+
+/* ---------- 17.3 QUIZ EXTRA · "Teste seu gabarito" por página ---------- */
+.quiz-extra {
+  margin: 36px 0 8px;
+  padding: 22px 22px 6px;
+  border-radius: var(--r-lg);
+  background: color-mix(in oklab, var(--surface-2) 35%, transparent);
+  border: 1px solid var(--hairline-soft);
+  position: relative;
+}
+.quiz-extra::before {
+  /* halo accent muito sutil topo · ancora visualmente o bloco */
+  content: "";
+  position: absolute; left: 22px; right: 22px; top: 0; height: 2px;
+  background: linear-gradient(90deg,
+    transparent,
+    color-mix(in oklab, var(--accent) 55%, transparent) 50%,
+    transparent);
+  border-radius: 2px;
+  opacity: .8;
+}
+.quiz-extra__head {
+  display: flex; flex-direction: column; gap: 4px;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed var(--hairline-soft);
+}
+.quiz-extra__title {
+  margin: 0; font-size: 18px; font-weight: 700;
+  letter-spacing: -0.01em; color: var(--txt);
+}
+.quiz-extra__sub {
+  margin: 0; font-size: 12.5px; color: var(--txt-3);
+  line-height: 1.45;
+}
+.quiz-extra .quiz {
+  /* dentro do bloco, os cards de questão ficam um pouco mais leves */
+  background: color-mix(in oklab, var(--surface) 92%, transparent);
+}
+
+/* ---------- 17.4 PAGE NAV · anterior / próxima página ---------- */
+.page-nav {
+  margin: 40px 0 8px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.page-nav__counter {
+  align-self: flex-end;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--txt-3);
+  letter-spacing: 0.04em;
+}
+.page-nav__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.page-nav__slot {
+  --nav-c: var(--accent);
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: var(--r-lg);
+  background: color-mix(in oklab, var(--surface) 88%, transparent);
+  border: 1px solid var(--hairline);
+  color: var(--txt-2);
+  text-decoration: none;
+  overflow: hidden;
+  transition:
+    transform var(--t-med) var(--ease-cinema),
+    border-color var(--t-fast) var(--ease),
+    background var(--t-fast) var(--ease),
+    box-shadow var(--t-med) var(--ease),
+    color var(--t-fast) var(--ease);
+}
+.page-nav__slot:hover {
+  border-color: color-mix(in oklab, var(--nav-c) 45%, var(--hairline));
+  background: color-mix(in oklab, var(--nav-c) 6%, var(--surface));
+  color: var(--txt);
+  transform: translateY(-2px);
+  box-shadow:
+    0 1px 0 0 color-mix(in oklab, white 18%, transparent) inset,
+    0 14px 28px -18px color-mix(in oklab, var(--nav-c) 60%, transparent),
+    0 4px 12px -6px rgba(12,10,9,.10);
+}
+.page-nav__slot:focus-visible {
+  outline: 2px solid var(--nav-c);
+  outline-offset: 3px;
+}
+.page-nav__slot--prev { text-align: left; }
+.page-nav__slot--next {
+  text-align: right;
+  /* inverte a ordem das colunas para o próximo · seta à direita */
+  grid-template-columns: auto 1fr auto;
+}
+.page-nav__slot--next .page-nav__copy { order: 1; }
+.page-nav__slot--next .page-nav__letter { order: 0; }
+.page-nav__slot--next .page-nav__arrow { order: 2; }
+.page-nav__slot--prev .page-nav__copy { align-items: flex-start; }
+.page-nav__slot--next .page-nav__copy { align-items: flex-end; }
+
+.page-nav__slot--empty {
+  /* slot vazio (primeira/última página) — preserva o grid sem chamar atenção */
+  background: transparent;
+  border: 1px dashed color-mix(in oklab, var(--hairline-soft) 60%, transparent);
+  pointer-events: none;
+  opacity: .35;
+}
+
+.page-nav__arrow {
+  width: 36px; height: 36px;
+  display: grid; place-items: center;
+  border-radius: 12px;
+  background: color-mix(in oklab, var(--nav-c) 12%, transparent);
+  color: var(--nav-c);
+  font-size: 18px; font-weight: 600;
+  font-family: var(--font-mono);
+  flex: none;
+  transition:
+    background var(--t-fast) var(--ease),
+    transform var(--t-med) var(--ease-spring);
+}
+.page-nav__slot:hover .page-nav__arrow {
+  background: color-mix(in oklab, var(--nav-c) 22%, transparent);
+}
+.page-nav__slot--prev:hover .page-nav__arrow { transform: translateX(-3px); }
+.page-nav__slot--next:hover .page-nav__arrow { transform: translateX(3px); }
+
+.page-nav__copy {
+  display: flex; flex-direction: column;
+  min-width: 0; gap: 2px;
+}
+.page-nav__eyebrow {
+  font-size: 10.5px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.10em;
+  color: var(--txt-3);
+}
+.page-nav__title {
+  font-size: 14px; font-weight: 600;
+  color: var(--txt);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  max-width: 100%;
+}
+.page-nav__group {
+  font-size: 11px; color: var(--txt-3);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  max-width: 100%;
+}
+.page-nav__letter {
+  width: 30px; height: 30px;
+  display: grid; place-items: center;
+  border-radius: 8px;
+  font-family: var(--font-mono); font-weight: 700; font-size: 12px;
+  background: color-mix(in oklab, var(--nav-c) 14%, transparent);
+  color: var(--nav-c);
+  flex: none;
+}
+
+/* mobile · navegação empilha verticalmente */
+@media (max-width: 720px) {
+  .page-nav__grid { grid-template-columns: 1fr; gap: 10px; }
+  .page-nav__slot { padding: 14px 16px; gap: 12px; }
+  .page-nav__slot--next { text-align: left; }
+  .page-nav__slot--next .page-nav__copy { align-items: flex-start; }
+  .page-nav__slot--next { grid-template-columns: auto 1fr auto; }
+  .page-nav__slot--next .page-nav__copy { order: 0; }
+  .page-nav__slot--next .page-nav__letter { order: 1; }
+  .page-nav__slot--next .page-nav__arrow { order: 2; }
+  .page-nav__slot--empty { display: none; }
+  .quiz-extra { padding: 18px 16px 6px; }
+  .quiz-extra__head { margin-bottom: 12px; padding-bottom: 10px; }
+}
+
 /* ---------- 18. FLASHCARD ---------- */
 .flash-deck { display: grid; gap: 16px; margin: 16px 0; }
 /* Stagger de entrada do deck — alimentado por --rv-i no scroll-reveal (Subetapa 3.2),

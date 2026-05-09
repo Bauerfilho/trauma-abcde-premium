@@ -10,7 +10,7 @@
    Versionamento: bump SW_VERSION para invalidar todos os caches antigos.
    ===================================================================== */
 
-const SW_VERSION   = "v1.0.3";
+const SW_VERSION   = "v1.0.4";
 const SHELL_CACHE  = `tp-shell-${SW_VERSION}`;
 const RUNTIME_CACHE= `tp-runtime-${SW_VERSION}`;
 const FONT_CACHE   = `tp-fonts-${SW_VERSION}`;
@@ -25,6 +25,8 @@ const APP_SHELL = [
   "./sections-1.js",
   "./sections-2.js",
   "./sections-3.js",
+  "./sections-quiz-extra.js",
+  "./sections-page-nav.js",
   "./manifest.json",
   "./icons/icon-192.svg",
   "./icons/icon-512.svg",

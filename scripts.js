@@ -442,6 +442,35 @@
         </div>`;
     }
     pageHost.appendChild(sec);
+
+    // ---------- inject: bloco de questões "Teste seu gabarito" ----------
+    // Reutiliza markup .quiz já tratado por bindInteractions(); só injeta
+    // se houver banco para a rota atual (páginas didáticas).
+    try {
+      if (window.TRAUMA_QUIZ_EXTRA
+          && typeof window.TRAUMA_QUIZ_EXTRA.has === "function"
+          && window.TRAUMA_QUIZ_EXTRA.has(id)) {
+        const html = window.TRAUMA_QUIZ_EXTRA.render(id);
+        if (html) {
+          const wrap = document.createElement("div");
+          wrap.innerHTML = html.trim();
+          while (wrap.firstChild) pageHost.appendChild(wrap.firstChild);
+        }
+      }
+    } catch (_) { /* fail-soft · nunca derruba a rota */ }
+
+    // ---------- inject: navegação inferior (anterior / próxima) ----------
+    try {
+      if (window.TRAUMA_PAGE_NAV && typeof window.TRAUMA_PAGE_NAV.render === "function") {
+        const html = window.TRAUMA_PAGE_NAV.render(id);
+        if (html) {
+          const wrap = document.createElement("div");
+          wrap.innerHTML = html.trim();
+          while (wrap.firstChild) pageHost.appendChild(wrap.firstChild);
+        }
+      }
+    } catch (_) { /* fail-soft */ }
+
     setActiveLink(id);
     updateProgress(id);
     // topbar copy
