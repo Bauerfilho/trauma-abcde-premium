@@ -521,7 +521,9 @@ input, select, textarea, button { font: inherit; }
     box-shadow  var(--t-med)  var(--ease),
     border-color var(--t-med) var(--ease);
   will-change: transform, opacity;
-  overflow: hidden; /* contém a barra de leitura ::after dentro do raio */
+  /* overflow liberado · popover de preferências (.prefs-panel) precisa
+     extravasar o header. A barra de leitura ::after agora usa clip-path
+     próprio para respeitar os cantos arredondados sem clipar filhos. */
 }
 .topbar.is-hidden {
   transform: translateY(calc(-100% - 12px));
@@ -539,12 +541,14 @@ input, select, textarea, button { font: inherit; }
 }
 
 /* Barra fina de progresso de leitura · cresce com o scroll da página atual.
-   Agora confinada dentro do card (overflow:hidden + cantos arredondados). */
+   Não usa overflow:hidden no pai (quebraria o popover de preferências).
+   Em vez disso, recua bottom/left/right para casar com o raio interno. */
 .topbar::after {
   content: "";
   position: absolute;
-  left: 0; right: 0; bottom: 0;
+  left: 10px; right: 10px; bottom: 1px;
   height: 2px;
+  border-radius: 2px;
   transform-origin: left center;
   transform: scaleX(var(--read-progress, 0));
   background: linear-gradient(90deg,
